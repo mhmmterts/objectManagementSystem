@@ -1,0 +1,47 @@
+﻿@model ObjectManagementSystem.Models.Entity.RESERVED_OBJECT_TABLE
+@{
+    ViewBag.Title = "GetReservedObject";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<head>
+    <title>Lend Reserved Object</title>
+</head>
+<h4></h4>
+<a class="btn btn-info" href="/Lend/ReservedObjects"><i class="glyphicon glyphicon-menu-left"></i>Back</a>
+<h2>Lend Reserved Object</h2>
+<!--Obje odunc verme formu baslangic-->
+@using (Html.BeginForm("LendReservedObject", "Lend", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Action Id</label>
+        @Html.TextBoxFor(reservation => reservation.ID, new { @class = "form-control", @readonly = "readonly" })
+        <br />
+        <label>Object Name</label>
+        @Html.TextBoxFor(reservation => reservation.OBJECT_TABLE.NAME, new { @class = "form-control", @readonly = "readonly" })
+        <br />
+        <label>Member Name</label>
+        @Html.TextBoxFor(reservation => reservation.MEMBER_TABLE.NAME, new { @class = "form-control", @readonly = "readonly" })
+        <br />
+        <label>Member Surname</label>
+        @Html.TextBoxFor(reservation => reservation.MEMBER_TABLE.SURNAME, new { @class = "form-control", @readonly = "readonly" })
+        <br />
+        <label>Borrow Date</label>
+        @Html.TextBoxFor(reservation => reservation.BORROWDATE, "{0:dd.MM.yyyy}", new { @class = "form-control", @required = "required", @oninput = "this.value = trim(this.value)" })
+        <br />
+        <label>Return Date</label>
+        @Html.TextBoxFor(reservation => reservation.RETURNDATE, "{0:dd.MM.yyyy}", new { @class = "form-control", @required = "required", @oninput = "this.value = trim(this.value)" })
+
+        <div>
+            <button id="defaultBtn" style="background-color:darkseagreen; color:black; margin-top:15px" class="btn btn-info">Lend Object</button>
+        </div>
+    </div>
+}
+<!--Obje odunc verme formu bitis-->
+@if (ViewBag.Danger != null)
+{
+    <div class="alert alert-danger" role="alert" style="width:50%;margin:auto; text-align:center;font-size:15px; position:static; margin-top: 10px">
+        @ViewBag.Danger
+    </div>
+}
+

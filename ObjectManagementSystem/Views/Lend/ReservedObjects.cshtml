@@ -1,0 +1,57 @@
+﻿@using ObjectManagementSystem.Models.Entity;
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<RESERVED_OBJECT_TABLE>
+@{
+    ViewBag.Title = "ReservedObjects";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<head>
+    <title>Reserved Objects</title>
+</head>
+<a class="btn btn-warning" style="color: black; float: left;margin-top:15px;" href="/Lend/GetExcelFile2">Export table to Excel</a>
+<!--Rezerve edilmis objeler icin arama cubugu baslangic-->
+@using (Html.BeginForm("ReservedObjects", "Lend", FormMethod.Get))
+{
+    <div class="container">
+        <div style="margin-top:15px; margin-bottom:15px; margin:auto; margin-top:15px; width:50%">
+            @Html.TextBox("search", "", new { @class = "form-control", @style = "width:60%;float:left", @placeholder = "Search object or member name...", @id = "searchInput", @maxlength = "30" })
+            <input class="btn btn-success" style="margin-left:15px; width:20%" type="submit" value="Search">
+            <button class="btn btn-info" style="margin-left:7px" onclick="ClearFields();"><i class="glyphicon glyphicon-refresh"></i></button>
+        </div>
+    </div>
+}
+<!--Rezerve edilmis objeler icin arama cubugu bitis-->
+<!--Rezerve edilmis objeler tablosu baslangic-->
+<div>
+    <h2 id="tableTitle" style="background-color: lightyellow;">List of Reserved Objects</h2>
+</div>
+
+<table class="table table-striped;" style="position: center; table-layout: auto; margin-bottom: -5px">
+    <tr>
+        <th>Reservation Id</th>
+        <th>Object Name</th>
+        <th>Member Name</th>
+        <th>Reservation Start Date</th>
+        <th>Reservation End Date</th>
+        <th>Lend Object</th>
+        <th>Reject Reservation</th>
+
+    </tr>
+    @foreach (var reservation in Model)
+    {
+        <tr>
+            <td>@reservation.ID</td>
+            <td>@reservation.OBJECT_TABLE.NAME</td>
+            <td>@reservation.MEMBER_TABLE.NAME @reservation.MEMBER_TABLE.SURNAME</td>
+            <td>@Convert.ToDateTime(reservation.BORROWDATE).ToString("dd/MM/yyyy") </td>
+            <td>@Convert.ToDateTime(reservation.RETURNDATE).ToString("dd/MM/yyyy")</td>
+            <td><a href="/Lend/GetReservedObject/@reservation.ID" class="btn btn-info" style="background-color:darkseagreen;color:black">Lend Object</a></td>
+            <td><a href="/Lend/DeleteReservation/@reservation.ID" class="btn btn-danger" style="background-color:darkred" onclick="return confirm(' Are you sure you want to reject the reservation of this object?')">Reject</a></td>
+        </tr>
+    }
+</table>
+<!--Rezerve edilmis objeler tablosu bitis-->
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("ReservedObjects", new { page }))
+

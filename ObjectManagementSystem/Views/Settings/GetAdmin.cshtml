@@ -1,0 +1,91 @@
+﻿@model ObjectManagementSystem.Models.Entity.ADMIN_TABLE
+@{
+    ViewBag.Title = "GetAdmin";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<head>
+    <title>Update Admin</title>
+</head>
+<h4></h4>
+<a class="btn btn-info" style="margin-bottom:10px" href="/Settings/Index"><i class="glyphicon glyphicon-menu-left"></i>Back</a>
+<!--Admin bilgisi guncelleme formu baslangic-->
+@using (Html.BeginForm("UpdateAdmin", "Settings", FormMethod.Post))
+{
+    <div class="form-group">
+
+        <label>ID</label>
+        @Html.TextBoxFor(person => person.ID, new { @class = "form-control", @readonly = "readonly" })
+        <br />
+        <label>Name</label>
+        @if (Html.DisplayFor(person => person.NAME).ToString() == "default")
+        {
+            @Html.TextBoxFor(person => person.NAME, new { @class = "form-control", @required = "required", @maxlength = "50", @placeholder = "Name", @onkeypress = "return isNumericKey(event)", @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.TextBoxFor(person => person.NAME, new { @class = "form-control", @required = "required", @maxlength = "50", @placeholder = "Name", @onkeypress = "return isNumericKey(event)", @onchange = "this.value = trim(this.value)" })
+        }
+        <br />
+        <label>Admin Username</label>
+        @Html.TextBoxFor(person => person.USERNAME, new { @class = "form-control", @required = "required", @maxlength = "20", @placeholder = "Username", @oninput = "this.value = trim(this.value)" })
+        <br />
+        <label>Admin Password</label>
+        @Html.TextBoxFor(person => person.PASSWORD, new { @class = "form-control", @required = "required", @maxlength = "20", @placeholder = "Password", @oninput = "this.value = trim(this.value)" })
+        <br />
+        <label>Admin Authority</label>
+        @if (Html.DisplayFor(person => person.NAME).ToString() == "default")
+        {
+            <select class="form-control" name="AUTHORITY" disabled>
+                <option selected>@Html.DisplayFor(person => person.AUTHORITY) </option>
+                @if (Html.DisplayFor(x => x.AUTHORITY).ToString() == "Employee")
+                {
+                    <option>Admin</option>
+                }
+                else
+                {
+                    <option>Employee</option>
+                }
+
+
+
+
+            </select>
+        }
+        else
+        {
+            <select class="form-control" name="AUTHORITY">
+                <option selected>@Html.DisplayFor(person => person.AUTHORITY) </option>
+                @if (Html.DisplayFor(x => x.AUTHORITY).ToString() == "Employee")
+                {
+                    <option>Admin</option>
+                }
+                else
+                {
+                    <option>Employee</option>
+                }
+
+
+
+
+            </select>
+        }
+    </div>
+    <div>
+        <button id="defaultBtn" style="background-color:darkseagreen; color:black; margin-top:15px" class="btn btn-info">Update</button>
+    </div>
+
+    if (Html.DisplayFor(x => x.USERNAME).ToString() == Session["Username"].ToString())
+    {
+        <div class="alert-danger" role="alert" style="width:50%;margin:auto; text-align:center; position:relative; margin-top: 10px; border-radius:15px;font-size:16px">
+            <b>Warning!!!</b><br /> You are currently logged into the admin panel with this account information. If you update the username or authority, your session will be terminated and you have to login again with the new information.
+        </div>
+
+    }
+}
+@if (@ViewBag.Message != null)
+{
+    <div class="alert alert-danger" role="alert" style="width:50%;margin:auto; text-align:center; position:relative; margin-top: 10px">
+        @ViewBag.Message
+    </div>
+}
+<!--Admin bilgisi guncelleme formu bitis-->

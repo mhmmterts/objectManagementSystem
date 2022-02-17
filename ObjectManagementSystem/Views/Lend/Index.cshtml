@@ -1,0 +1,64 @@
+﻿@using ObjectManagementSystem.Models.Entity;
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<ACTION_TABLE>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<head>
+    <title>Loaned Objects</title>
+</head>
+<a class="btn btn-warning" style="color: black; float: left;margin-top:15px;" href="/Lend/GetExcelFile">Export table to Excel</a>
+<!--Odunc alinmis objeler icin arama cubugu baslangic-->
+@using (Html.BeginForm("Index", "Lend", FormMethod.Get))
+{
+    <div class="container">
+        <div style="margin-top:15px; margin-bottom:15px; margin:auto; margin-top:15px; width:50%">
+            @Html.TextBox("search", "", new { @class = "form-control", @style = "width:60%;float:left", @placeholder = "Search object or member name...", @id = "searchInput", @maxlength = "30" })
+            <input class="btn btn-success" style="margin-left:15px; width:20%" type="submit" value="Search">
+            <button class="btn btn-info" style="margin-left:7px" onclick="ClearFields();"><i class="glyphicon glyphicon-refresh"></i></button>
+        </div>
+    </div>
+}
+<!--Odunc alinmis objeler icin arama cubugu bitis-->
+<!--Odunc alinmis objeler tablosu baslangic-->
+<div>
+    <h2 id="tableTitle" style="background-color: lightyellow;">List of Loaned Objects</h2>
+</div>
+
+<table class="table table-striped;" style="position: center; table-layout: auto; margin-bottom: -5px">
+    <tr>
+        <th>Transaction Id</th>
+        <th>Object Name</th>
+        <th>Member Name</th>
+        <th>Employee ID</th>
+        <th>Lend Date</th>
+        <th>Return Date</th>
+        <th>Return</th>
+        <th>Extend period</th>
+    </tr>
+    @foreach (var action in Model)
+    {
+        <tr>
+            <td>@action.ID</td>
+            <td>@action.OBJECT_TABLE.NAME</td>
+            <td>@action.MEMBER_TABLE.NAME @action.MEMBER_TABLE.SURNAME</td>
+            <td>@action.EMPLOYEE </td>
+            <td>@Convert.ToDateTime(action.BORROWDATE).ToString("dd/MM/yyyy") </td>
+            <td>@Convert.ToDateTime(action.RETURNDATE).ToString("dd/MM/yyyy")</td>
+            <td><a href="/Lend/ReturnObject/@action.ID" class="btn btn-info" style="background-color:darkseagreen;color:black">Return Object</a></td>
+            <td><a href="/Lend/ExtendPeriod/@action.ID" class="btn btn-info" style="background-color:powderblue;color:black" onclick="return confirm(' Are you sure you want to extend the loan period of the object by 7 days.')">Extend period</a></td>
+        </tr>
+    }
+</table>
+<!--Odunc alinmis objeler tablosu bitis-->
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-danger" role="alert" style="width:50%;text-align:center;margin:auto">
+        <b>No Items found.</b>
+    </div>
+}
+

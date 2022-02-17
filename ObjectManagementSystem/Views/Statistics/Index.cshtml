@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+<link href="~/Content/Statistics/css/style.css" rel="stylesheet" />
+<link href="~/Content/Statistics/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Statistics/css/clndr.css" rel="stylesheet" />
+<link href="~/Content/Statistics/css/jqvmap.css" rel="stylesheet" />
+<link href="~/Content/Statistics/css/nav.css" rel="stylesheet" />
+<script src="~/Content/Statistics/js/Chart1.js"></script>
+
+<head>
+    <title>Statistics</title>
+</head>
+
+<h2 style="margin-top:10px">Statistics</h2>
+<!--Istatistik bilgi kartlari baslangic-->
+<div class="list_of_members">
+
+    <div class="new-users">
+        <div class="icon">
+            <i class="user1"></i>
+        </div>
+        <div class="icon-text">
+            <h3>@ViewBag.userNum</h3>
+            <p>Number of Users</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="orders">
+        <div class="icon">
+            <i class="order"></i>
+        </div>
+        <div class="icon-text">
+            <h3>@ViewBag.objectNum</h3>
+            <p>Number of Objects</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="visitors">
+        <div class="icon">
+            <i class="visit"></i>
+        </div>
+        <div class="icon-text">
+            <h3>@ViewBag.loanedObjectNum</h3>
+            <p>Loaned Objects</p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<!--Istatistik bilgi kartlari bitis-->

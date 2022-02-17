@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Layout.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/Images/tau.ico" />
+</head>
+<body>
+    <!--Admin paneli yan menu baslangic-->
+    <span class="sidebar">
+        <a href="/Display/Index"><i class="glyphicon glyphicon-home"></i> &nbsp; Home Page</a>
+        <a href="/Category/Index/"><i class="glyphicon glyphicon-list"></i> &nbsp; Categories</a>
+        <a href="/Object/Index"><i class="glyphicon glyphicon-tasks"></i> &nbsp; Objects</a>
+        <a href="/Member/Index/"><i class="glyphicon glyphicon-user"></i> &nbsp; Members</a>
+        <a href="/Lend/Lend/"><i class="glyphicon glyphicon-arrow-left"></i> &nbsp; Lend Object</a>
+        <a href="/Lend/ReservedObjects/"><i class="glyphicon glyphicon-arrow-left"></i> &nbsp; Lend Reserved &nbsp; &nbsp; &nbsp; Object</a>
+        <a href="/Lend/Index"><i class="glyphicon glyphicon-arrow-right"></i> &nbsp; Receive Object</a>
+        <a href="/Statistics/Index"><i class="glyphicon glyphicon-pencil"></i> &nbsp; Statistics</a>
+        <a href="/ContactForm/Index"><i class="glyphicon glyphicon-info-sign"></i> &nbsp; Contacts</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="/Settings/Index"><i class="glyphicon glyphicon-cog"></i> &nbsp; Settings</a>
+        }
+        <a href="/Panel/LogOut"><i class="glyphicon glyphicon-remove-sign"></i> &nbsp; Exit</a>
+    </span>
+    <!--Admin paneli yan menu bitis-->
+    <div class="main">
+        @RenderBody()
+    </div>
+    <script src="~/Scripts/input.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+</body>
+</html>
